@@ -1,13 +1,14 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.Jokes;
+
+//import com.example.Jokes;
 import com.udacity.gradle.androidlib.ShowJokeActivity;
 
 
@@ -45,8 +46,23 @@ public class MainActivity extends AppCompatActivity {
     public void tellJoke(View view) {
         //
         //Toast.makeText(this, Jokes.get(), Toast.LENGTH_SHORT).show();
-        ShowJokeActivity.showJoke(this, Jokes.get());
+        //ShowJokeActivity.showJoke(this, Jokes.get());
+        new GetJokeAsyncTask(this).execute();
     }
 
+    private class GetJokeAsyncTask extends JokeApiAsyncTask{
+        Context context;
+
+        public GetJokeAsyncTask(Context context){
+            this.context = context;
+        }
+
+        @Override
+        protected void onPostExecute(String strJoke) {
+            super.onPostExecute(strJoke);
+            ShowJokeActivity.showJoke(context, strJoke);
+
+        }
+    }
 
 }
