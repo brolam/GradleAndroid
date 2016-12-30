@@ -34,6 +34,8 @@ public class ApiEndpoint {
     public JokeBean getJokeBean() {
         JokeBean response = new JokeBean();
         response.setData(Jokes.get());
+        //To test empty value:
+        //response.setData("");
         return response;
     }
 

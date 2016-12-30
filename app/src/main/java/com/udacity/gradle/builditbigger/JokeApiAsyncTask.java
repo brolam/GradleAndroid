@@ -14,16 +14,24 @@ import java.io.IOException;
  * Created by brenomar on 29/12/16.
  */
 
-public class JokeApiAsyncTask extends AsyncTask<Void, Void, String> {
+public abstract class JokeApiAsyncTask extends AsyncTask<Void, Void, String> {
+    Exception exception = null;
 
+    public boolean isException(){
+        return exception !=null;
+    }
+
+    public Exception getException() {
+        return exception;
+    }
 
     @Override
     protected String doInBackground(Void... voids) {
         try {
             return getJokeApi().get().execute().getData();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return e.getMessage();
+        } catch (Exception e) {
+            this.exception = e;
+            return new String();
         }
     }
 

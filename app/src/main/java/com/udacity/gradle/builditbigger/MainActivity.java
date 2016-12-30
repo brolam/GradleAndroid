@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 
 //import com.example.Jokes;
@@ -60,7 +61,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String strJoke) {
             super.onPostExecute(strJoke);
-            ShowJokeActivity.showJoke(context, strJoke);
+            if ( isException() == false ) {
+                ShowJokeActivity.showJoke(context, strJoke);
+            } else {
+                Toast.makeText(context, com.udacity.gradle.androidlib.R.string.error_not_show_the_joke,Toast.LENGTH_SHORT).show();
+            }
 
         }
     }
