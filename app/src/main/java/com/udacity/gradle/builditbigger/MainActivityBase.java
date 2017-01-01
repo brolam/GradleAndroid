@@ -7,13 +7,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
-
-//import com.example.Jokes;
 import com.udacity.gradle.androidlib.ShowJokeActivity;
 
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * This is the Base Main Activity for shared features to paid and free versions.
+ * By Breno Marques 01/01/2017
+ */
+public class MainActivityBase extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +49,13 @@ public class MainActivity extends AppCompatActivity {
         //
         //Toast.makeText(this, Jokes.get(), Toast.LENGTH_SHORT).show();
         //ShowJokeActivity.showJoke(this, Jokes.get());
+        showJoke();
+    }
+
+    protected void showJoke(){
         new GetJokeAsyncTask(this).execute();
     }
+
 
     private class GetJokeAsyncTask extends JokeApiAsyncTask{
         Context context;

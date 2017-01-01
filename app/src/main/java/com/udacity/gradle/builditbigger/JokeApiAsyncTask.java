@@ -1,7 +1,6 @@
 package com.udacity.gradle.builditbigger;
 
 import android.os.AsyncTask;
-
 import com.example.brenomar.myapplication.backend.jokeApi.JokeApi;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -11,9 +10,8 @@ import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 import java.io.IOException;
 
 /**
- * Created by brenomar on 29/12/16.
+ * Base features to make a requisition on Joke Api
  */
-
 public abstract class JokeApiAsyncTask extends AsyncTask<Void, Void, String> {
     Exception exception = null;
 
