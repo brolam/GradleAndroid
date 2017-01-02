@@ -16,10 +16,15 @@ import com.udacity.gradle.androidlib.ShowJokeActivity;
  */
 public class MainActivityBase extends AppCompatActivity {
 
+    View fragment;
+    View progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.fragment = this.findViewById(R.id.fragment);
+        this.progressBar = this.findViewById(R.id.progressBar);
     }
 
 
@@ -57,6 +62,13 @@ public class MainActivityBase extends AppCompatActivity {
     }
 
 
+    void showProgressBar(boolean show){
+        fragment.setVisibility(show? View.GONE : View.VISIBLE);
+        progressBar.setVisibility(show?View.VISIBLE : View.GONE );
+
+    }
+
+
     private class GetJokeAsyncTask extends JokeApiAsyncTask{
         Context context;
 
@@ -67,13 +79,30 @@ public class MainActivityBase extends AppCompatActivity {
         @Override
         protected void onPostExecute(String strJoke) {
             super.onPostExecute(strJoke);
-            if ( isException() == false ) {
-                ShowJokeActivity.showJoke(context, strJoke);
-            } else {
-                Toast.makeText(context, com.udacity.gradle.androidlib.R.string.error_not_show_the_joke,Toast.LENGTH_SHORT).show();
-            }
+            try {
+                if ( isException() == false ) {
+                    ShowJokeActivity.showJoke(context, strJoke);
+                } else {
+                    Toast.makeText(context, com.udacity.gradle.androidlib.R.string.error_not_show_the_joke,Toast.LENGTH_SHORT).show();
+                }
 
+            } finally {
+                showProgressBar(false);
+            }
         }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showProgressBar(true);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            showProgressBar(false);
+        }
+
     }
 
 }
