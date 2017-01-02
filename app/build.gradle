@@ -40,3 +40,19 @@ dependencies {
     compile 'com.google.code.findbugs:jsr305:2.0.1'
     compile project(path: ':backend', configuration: 'android-endpoints')
 }
+
+task integrationDebugFreeTesting(dependsOn: [":backend:appengineRun"]) {
+    description "Integration test between Web Api and App"
+    group "verification"
+
+
+    project(":backend").afterEvaluate { backend ->
+        backend.extensions.appengine.daemon = true
+    }
+
+    doLast{
+        tasks.findByName('connectedFreeDebugAndroidTest').execute()
+    }
+    finalizedBy ":backend:appengineStop"
+
+}
